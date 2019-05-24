@@ -1,7 +1,7 @@
 FROM python:3.7-alpine
 
 RUN apk add yarn \
-        mariadb-connector-c-dev \
+        mariadb-connector-c-dev 
 RUN git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app/
 WORKDIR /app
 RUN virtualenv -p python3 flask
