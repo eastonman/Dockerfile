@@ -12,11 +12,11 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --no-cache \
         mariadb-connector-c-dev \
         yarn \
-        supervisor
-RUN git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app
-WORKDIR /app
-RUN pip install -r requirements.txt
-RUN apk del --purge .build-deps
+        supervisor \
+    && git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app \
+    && cd /app \
+    && pip install -r requirements.txt \
+    && apk del --purge .build-deps
 RUN cp ./supervisord.conf /etc/supervisord.conf && cp ./config_template.py /app/config.py && cp ./docker/PowerDNS-Admin/entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ['/entrypoint.sh']
