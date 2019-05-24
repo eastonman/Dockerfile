@@ -1,14 +1,22 @@
 FROM python:3.7-alpine
 
-RUN apk add yarn \
-        mariadb-connector-c-dev 
-RUN git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app/
+RUN apk add --no-cache --virtual .build-deps \
+        git \
+        build-base \
+        libxslt-dev \
+        libffi-dev \
+        libxml2-dev \
+        xmlsec-dev \
+        openldap-dev \
+        libldap \ 
+    && apk add --no-cache \
+        mariadb-connector-c-dev \
+        yarn \
+        supervisor
+RUN git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app
 WORKDIR /app
-RUN virtualenv -p python3 flask
-RUN . ./flask/bin/activate
-RUN pip install python-dotenv && pip install -r requirements.txt
-ENV FLASK_APP=app/__init__.py
-RUN yarn install --pure-lockfile
-RUN flask assets build
+RUN pip install -r requirements.txt
+RUN apk del --purge .build-deps
+RUN cp ./supervisord.conf /etc/supervisord.conf && cp ./config_template.py /app/config.py && cp ./docker/PowerDNS-Admin/entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ['/app/run.py']
+ENTRYPOINT ['/entrypoint.sh']
