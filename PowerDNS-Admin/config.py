@@ -19,7 +19,7 @@ SALT = '$2b$12$yLUMTIfl21FKJQpTkRQXCu'
 UPLOAD_DIR = os.path.join(basedir, 'upload')
 
 # DATABASE CONFIG
-SQLA_DB_USER = 'pdnsadminuser'
+SQLA_DB_USER = 'pdauser'
 SQLA_DB_PASSWORD = 'passpass'
 SQLA_DB_HOST = 'db'
 SQLA_DB_PORT = 3306

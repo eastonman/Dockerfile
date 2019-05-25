@@ -7,6 +7,7 @@ set -o pipefail
 # == Vars
 #
 DB_MIGRATION_DIR='/app/migrations'
+WORK_DIR='/app'
 if [[ -z ${PDNS_PROTO} ]];
  then PDNS_PROTO="http"
 fi
@@ -15,8 +16,14 @@ if [[ -z ${PDNS_PORT} ]];
  then PDNS_PORT=8081
 fi
 
+if [[ -z ${PDA_DB_USER} ]];
+  then PDA_DB_USER=pdauser
+fi
+
+sed -i "s/pdauser/${PDA_DB_USER}/g" ${WORK_DIR}/config.py
+
 if [[ -z ${PDA_PORT} ]];
- then PDA_PORT=8080
+  then PDA_PORT=8080
 fi
 
 sed -i "s/8080/${PDA_PORT}/g" /etc/supervisord.conf
