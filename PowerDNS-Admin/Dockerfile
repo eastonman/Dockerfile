@@ -11,6 +11,7 @@ RUN apk add --no-cache --virtual .build-deps \
         mariadb-connector-c-dev \
     && apk add --no-cache \
         mariadb-client \
+        mariadb-dev \
         openldap-dev \
         yarn \
         supervisor \
