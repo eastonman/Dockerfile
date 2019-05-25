@@ -9,8 +9,9 @@ RUN apk add --no-cache --virtual .build-deps \
         xmlsec-dev \
         openldap-dev \
         libldap \ 
-    && apk add --no-cache \
         mariadb-connector-c-dev \
+    && apk add --no-cache \
+        mariadb-client \
         yarn \
         supervisor \
     && git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app \
