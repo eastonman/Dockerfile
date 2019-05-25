@@ -20,4 +20,4 @@ RUN apk add --no-cache --virtual .build-deps \
 WORKDIR /app
 RUN cp ./supervisord.conf /etc/supervisord.conf && cp ./config_template.py /app/config.py && cp ./docker/PowerDNS-Admin/entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ['/entrypoint.sh']
+ENTRYPOINT ["/entrypoint.sh"]
