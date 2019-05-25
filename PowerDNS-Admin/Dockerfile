@@ -19,7 +19,8 @@ RUN apk add --no-cache --virtual .build-deps \
     && pip install -r requirements.txt \
     && apk del --purge .build-deps
 WORKDIR /app
-RUN cp ./supervisord.conf /etc/supervisord.conf && cp ./config_template.py /app/config.py
+RUN cp ./supervisord.conf /etc/supervisord.conf
+ADD ./config.py /app/config.py
 ADD ./entrypoint.sh /entrypoint.sh
 RUN ["chmod","+x","/entrypoint.sh"]
 
