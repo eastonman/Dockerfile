@@ -20,5 +20,6 @@ RUN apk add --no-cache --virtual .build-deps \
 WORKDIR /app
 RUN cp ./supervisord.conf /etc/supervisord.conf && cp ./config_template.py /app/config.py
 ADD ./entrypoint.sh /entrypoint.sh
+RUN ["chmod","+x","/entrypoint.sh"]
 
 ENTRYPOINT ["/entrypoint.sh"]
