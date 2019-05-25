@@ -19,6 +19,6 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk del --purge .build-deps
 WORKDIR /app
 RUN cp ./supervisord.conf /etc/supervisord.conf && cp ./config_template.py /app/config.py
-COPY cp ./entrypoint.sh /entrypoint.sh
+ADD ./entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
