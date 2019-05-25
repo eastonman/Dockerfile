@@ -16,16 +16,40 @@ if [[ -z ${PDNS_PORT} ]];
  then PDNS_PORT=8081
 fi
 
+#Retrieve DB host from environment variable
+if [[ -z ${PDA_DB_HOST} ]];
+  then PDA_DB_HOST=pdadbhost
+fi
+sed -i "s/pdadbhost/${PDA_DB_HOST}/g" ${WORK_DIR}/config.py
+
+#Retrieve DB port from environment variable
+if [[ -z ${PDA_DB_PORT} ]];
+  then PDA_DB_PORT=3306
+fi
+sed -i "s/3306/${PDA_DB_PORT}/g" ${WORK_DIR}/config.py
+
+#Retrieve DB user from environment variable
 if [[ -z ${PDA_DB_USER} ]];
   then PDA_DB_USER=pdauser
 fi
-
 sed -i "s/pdauser/${PDA_DB_USER}/g" ${WORK_DIR}/config.py
 
+#Retrieve DB password from environment variable
+if [[ -z ${PDA_DB_PASSWORD} ]];
+  then PDA_DB_PASSWORD=pdapassword
+fi
+sed -i "s/pdapassword/${PDA_DB_PASSWORD}/g" ${WORK_DIR}/config.py
+
+#Retrieve DB database name from environment variable
+if [[ -z ${PDA_DB_NAME} ]];
+  then PDA_DB_NAME=pdadbname
+fi
+sed -i "s/pdadbname/${PDA_DB_NAME}/g" ${WORK_DIR}/config.py
+
+#Retrieve Gunicorn listening port from environment variable
 if [[ -z ${PDA_PORT} ]];
   then PDA_PORT=8080
 fi
-
 sed -i "s/8080/${PDA_PORT}/g" /etc/supervisord.conf
 
 

@@ -20,10 +20,10 @@ UPLOAD_DIR = os.path.join(basedir, 'upload')
 
 # DATABASE CONFIG
 SQLA_DB_USER = 'pdauser'
-SQLA_DB_PASSWORD = 'passpass'
-SQLA_DB_HOST = 'db'
+SQLA_DB_PASSWORD = 'pdapassword'
+SQLA_DB_HOST = 'pdadbhost'
 SQLA_DB_PORT = 3306
-SQLA_DB_NAME = 'powerdnsadmin'
+SQLA_DB_NAME = 'pdadbname'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # DATABASE - MySQL
