@@ -15,6 +15,11 @@ if [[ -z ${PDNS_PORT} ]];
  then PDNS_PORT=8081
 fi
 
+if [[ -z ${PDA_PORT} ]];
+ then PDA_PORT=8080
+fi
+
+sed -i "s/8080/${PDA_PORT}/g" /etc/supervisord.conf
 
 
 # Wait for us to be able to connect to MySQL before proceeding
