@@ -7,16 +7,16 @@ RUN apk add --no-cache --virtual .build-deps \
         libffi-dev \
         libxml2-dev \
         xmlsec-dev \
-        openldap-dev \
         libldap \ 
         mariadb-connector-c-dev \
     && apk add --no-cache \
         mariadb-client \
+        openldap-dev \
         yarn \
         supervisor \
     && git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app \
     && cd /app \
-    && pip install -r requirements.txt \
+    && pip install -U python-dotenv && pip install -r requirements.txt \
     && apk del --purge .build-deps
 WORKDIR /app
 RUN cp ./supervisord.conf /etc/supervisord.conf
