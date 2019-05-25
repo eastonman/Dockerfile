@@ -57,13 +57,14 @@ mysql -h${PDA_DB_HOST} -u${PDA_DB_USER} -p${PDA_DB_PASSWORD} -P${PDA_DB_PORT} ${
 mysql -h${PDA_DB_HOST} -u${PDA_DB_USER} -p${PDA_DB_PASSWORD} -P${PDA_DB_PORT} ${PDA_DB_NAME} -e "UPDATE setting SET value='${PDNS_API_KEY}' WHERE name='pdns_api_key';"
 
 echo "===> Assets management"
+[ -d /app ] && chown -fhR www-data:www-data /app
 echo "---> Running Yarn"
-chown -R www-data:www-data /app/app/static
-chown -R www-data:www-data /app/node_modules
+[ -d /app/app/static ] && chown -fhR www-data:www-data /app/app/static
+[ -d /app/node_modules ] && chown -fhR www-data:www-data /app/node_modules
 su -s /bin/bash -c 'yarn install --pure-lockfile' www-data
 
 echo "---> Running Flask assets"
-chown -R www-data:www-data /app/logs
+[ -d /app/logs ] && chown -fhR www-data:www-data /app/logs
 su -s /bin/bash -c 'flask assets build' www-data
 
 

@@ -25,10 +25,11 @@ RUN addgroup www-data \
         --gecos "" \
         --ingroup www-data \
         --no-create-home \
-        www-data \
-    && chown -R www-data /app
+        www-data
 WORKDIR /app
-RUN cp ./supervisord.conf /etc/supervisord.conf
+VOLUME /app/app/static
+ADD ./supervisord.conf /etc/supervisord.conf
+RUN apk add --no-cache bash
 ADD ./config.py /app/config.py
 ADD ./entrypoint.sh /entrypoint.sh
 RUN ["chmod","+x","/entrypoint.sh"]
