@@ -15,6 +15,7 @@ RUN apk add --no-cache --virtual .build-deps \
         openldap-dev \
         yarn \
         supervisor \
+        bash \
     && git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app \
     && cd /app \
     && pip install -U python-dotenv && pip install -r requirements.txt \
@@ -29,7 +30,6 @@ RUN addgroup www-data \
 WORKDIR /app
 VOLUME /app/app/static
 ADD ./supervisord.conf /etc/supervisord.conf
-RUN apk add --no-cache bash
 ADD ./config.py /app/config.py
 ADD ./entrypoint.sh /entrypoint.sh
 RUN ["chmod","+x","/entrypoint.sh"]
