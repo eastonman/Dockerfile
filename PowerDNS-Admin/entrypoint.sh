@@ -1,7 +1,6 @@
 #!/bin/ash
 
 set -o errexit
-set -o pipefail
 
 
 # == Vars
@@ -51,6 +50,11 @@ if [[ -z ${PDA_PORT} ]];
   then PDA_PORT=8080
 fi
 sed -i "s/8080/${PDA_PORT}/g" /etc/supervisord.conf
+
+#Generate random salt
+echo "===> Generating salt"
+SALT=$(cat /dev/urandom | head -n 10 | md5sum)
+sed -i "s/salt_anchor/${SALT}/g" ${WORK_DIR}/config.py
 
 
 # Wait for us to be able to connect to MySQL before proceeding

@@ -27,6 +27,7 @@ RUN addgroup www-data \
         --ingroup www-data \
         --no-create-home \
         www-data
+RUN ls
 WORKDIR /app
 VOLUME /app/app/static
 ADD ./supervisord.conf /etc/supervisord.conf
