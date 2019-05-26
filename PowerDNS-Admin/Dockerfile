@@ -1,5 +1,6 @@
-FROM python:3.7-alpine
+FROM python:3.7-alpine as builder
 
+WORKDIR /wheels
 RUN apk add --no-cache --virtual .build-deps \
         git \
         build-base \
@@ -17,9 +18,25 @@ RUN apk add --no-cache --virtual .build-deps \
         supervisor \
         bash \
     && git clone https://github.com/ngoduykhanh/PowerDNS-Admin.git /app \
-    && cd /app \
-    && pip install -U python-dotenv && pip install -r requirements.txt \
-    && apk del --purge .build-deps
+    && pip install -U pip \
+    && pip wheel python-dotenv \
+    && pip wheel -r /app/requirements.txt
+
+FROM python:3.7-alpine
+COPY --from=builder /app /app
+COPY --from=builder /wheels /wheels
+RUN apk add --no-cache \
+        mariadb-dev \
+        openldap-dev \
+        mariadb-client \
+        supervisor \
+        yarn \
+        bash \
+    && pip install -U pip \
+    && pip install -f /wheels python-dotenv \
+    && pip install -r /app/requirements.txt -f /wheels \
+    && rm -rf /wheels \
+    && rm -rf ~/,cache/pip/*
 RUN addgroup www-data \
     && adduser \
         --disabled-password \
@@ -27,7 +44,6 @@ RUN addgroup www-data \
         --ingroup www-data \
         --no-create-home \
         www-data
-RUN ls
 WORKDIR /app
 VOLUME /app/app/static
 ADD ./supervisord.conf /etc/supervisord.conf
